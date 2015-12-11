@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+#$ -S /bin/bash
+#
+# our name 
+#$ -N q40-cgs
+#
+# pe request
+#$ -pe MPI.all 1-1
+#
+# MPIR_HOME from submitting environment
+#$ -v MPIR_HOME=/soft/mpich,SGE_QMASTER_PORT
+# ---------------------------
+
+echo "Got $NSLOTS slots."
+source /soft/env/env_64.sh
+
+# enables $TMPDIR/rsh to catch rsh calls if available
+export path=($TMPDIR $path)
+export PATH="$TMPDIR:${PATH}"
+export OMP_NUM_THREADS=1
+
+cd /home/liebend/supernovahp2c
+echo s40_|./compile/agile_idsa>s40_.log
