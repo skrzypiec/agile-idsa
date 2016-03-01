@@ -11,6 +11,8 @@
       use units_module
       use species_module
       use egroup_module
+      use ec_module, only: itmax,iymax,idmax,
+     &                     ec_d,ec_t,ec_ye
 
       implicit none
 
@@ -37,14 +39,40 @@
 
       integer :: ie
       real :: Enu,tmp,etanp,etapn,egy,fexp
+      real :: t9
+      real, dimension(ne) :: em_ec
 
-!.....special exponential factor (just to save computer time)...........
-      fexp=exp(-mu(jhat)/t)
+!.TF.debug.eos-limits reached.
+      if (t.le.0.5) then
+         em(:,len)=0.
+         ab(:,len)=0.
+         em(:,lea)=0.
+         ab(:,lea)=0.
+         return
+      endif
+      if ((y(je).gt.0.5).or.(y(je).le.0.05)) then
+        em(:,len)=0.
+        ab(:,len)=0.
+        em(:,lea)=0.
+        ab(:,lea)=0.
+        return
+      endif
+
+!....nuclear ec-rates...................................................
+      t9 = t/(units%kb/units%MeV)/1.e9
+      if   (((t9.ge.ec_t(1)).and.(t9.le.ec_t(itmax))).and.
+     &      ((y(je).ge.ec_ye(1)).and.(y(je).le.ec_ye(iymax))).and.
+     &      ((d.ge.ec_d(1)).and.(d.le.ec_d(idmax))) )then
+        call interpolate_ec(t9,y(je),d,em_ec(1:ne))
+        em(1:ne,len)=em_ec(1:ne)*y(jh)*units%c
+      else
+        em(1:ne,len)=0.0
+      endif
 
 !.....nucleon degeneracy parameter......................................
       if (mu(jhat).gt.0.01) then
-        etapn = (y(jn)-y(jp))*fexp/(1. - fexp)*d/units%mb
-        etanp = (y(jp)-y(jn))/(fexp - 1.)*d/units%mb
+        etapn = (y(jn)-y(jp))/(exp(mu(jhat)/t)-1.0)*d/units%mb
+        etanp = (y(jp)-y(jn))/(exp(-mu(jhat).t)-1.0)*d/units%mb
       else
         etapn = y(jp)*d/units%mb
         etanp = y(jn)*d/units%mb
@@ -56,10 +84,14 @@
         egy = Enu**2 * sqrt(1. - (units%me/Enu)**2)
 
 !.....neutrino emissivity and absorptivity..............................
-        tmp = (Enu-mu(je)+mu(jhat))/t	!units%Q is included in Enu
-        tmp=exp(-tmp)
-        ab(ie,len)=fac*etapn*egy/(tmp+fexp)
-        em(ie,len)=ab(ie,len)*tmp
+        fe=1.0/(1.0+exp((Enu-mu(je))/t))
+        em(ie,len) = em(ie,len) + fac*etapn*egy*fe
+        if (em(ie,len).le.0.0) then
+          em(ie,len)=0.
+          ab(ie,len)=0.
+        else
+          ab(ie,len)=em(ie,len)*(exp((Enu-mu(je)+mu(jhat))/t))
+        endif
 
 !.....threshold for positron capture....................................
         Enu = E(ie) - units%Q
@@ -72,12 +104,18 @@
           egy = Enu**2 * sqrt(1. - (units%me/Enu)**2)
 
 !.....antineutrino emissivity and absorptivity..........................
-          tmp = (Enu+mu(je)-mu(jhat))/t	!units%Q is included in Enu
-          tmp=exp(-tmp)
-          ab(ie,lea)=fac*etanp*egy*fexp/(fexp*tmp+1.)
-          em(ie,lea)=ab(ie,lea)*tmp
+          fe=1.0/(1.0+exp((Enu+mu(je))/t))
+          em(ie,lea)=fac*etanp*egy*fe
+          if (em(ie,lea).le.0.0) then
+            em(ie,lea)=0.
+            ab(ie,lea)=0.
+          else
+            ab(ie,lea)=em(ie,len)*(exp((Enu+mu(je)-mu(jhat))/t))
+          endif
         endif
       enddo
+
+
 
       end subroutine nprates
 

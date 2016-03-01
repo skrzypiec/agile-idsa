@@ -49,6 +49,9 @@
       write(6,*) 'Info: reading '//trim(input_path%eosfn)
       call eos_read(input_path%eosfn)
       call spectrum_initialise
+!...
+      call read_ec  
+!...
 
 !-----build initial state-----------------------------------------------
       call agile_initialisation
@@ -77,6 +80,10 @@
 
 !.....do time step......................................................
           dt = min(dthyd,dtnut,input_step%stop-state%t)
+!...
+          if (input_step%initial) call input_read_step
+          if (input_step%dtforce.eq.1) dt=max(dt,input_step%dtforceval)
+!...             
           new = state
           status = 0
           call agile_step(dt,state,new,dthyd,equations_step)

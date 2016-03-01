@@ -47,7 +47,8 @@
 
 !.....read in Woosley & Weaver 1995 model...............................
       if ((trim(input_path%progenitorfn).eq.'s15s7b2')
-     &  .or.(trim(input_path%progenitorfn).eq.'s40s7b2')) then
+     &  .or.(trim(input_path%progenitorfn).eq.'s40s7b2')
+     &  .or.(trim(input_path%progenitorfn).eq.'h40z002s0')) then
         call s15s7b2(amp,arp,aup,bdp,btp,byp)
 
 !.....read Heger, Woosley & Weaver 2002 model...........................

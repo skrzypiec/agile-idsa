@@ -29,7 +29,7 @@
 !
 !-----------------------------------------------------------------------
 
-      real, parameter :: emin=3.,emax=300.
+      real, parameter :: emin=3.0,emax=300.
 
       integer :: ie
       real :: f1,f2

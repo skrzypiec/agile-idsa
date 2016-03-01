@@ -68,6 +68,10 @@
         real :: maximum			!step size limit
         real :: dt			!time interval for state_write
         integer :: dstep		!step interval for state_write
+!...
+        integer :: dtforce		!
+        real :: dtforceval		!
+!...
       end type input_step_type
 
       type input_idsa_type
@@ -92,6 +96,9 @@
         character(72) :: restart        !path to restart files
         character(72) :: eosfn          !file name for eos table
         character(72) :: progenitorfn	!file name for progenitor data
+!...
+        character(72) :: ec		!file name for ec data
+!...
       end type input_path_type
 
 !=======================================================================
@@ -291,6 +298,10 @@
         read(1,11) input_step%maximum
         read(1,11) input_step%dt
         read(1,22) input_step%dstep
+!...    
+        read(1,22) input_step%dtforce
+        read(1,22) input_step%dtforceval
+!...
         close(1)
 11      format(t25,g12.4)
 22      format(t25,i12)
@@ -353,6 +364,9 @@
         read(1,11) input_path%restart
         read(1,11) input_path%eosfn
         read(1,11) input_path%progenitorfn
+!...
+        read(1,11) input_path%ec
+!...
 11      format(t25,a72)
 22      format(t25,i12)
         close(1)
