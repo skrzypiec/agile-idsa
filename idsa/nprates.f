@@ -38,17 +38,17 @@
      &  * units%GF**2/units%pi * (units%gv**2+3.*units%ga**2) * units%c
 
       integer :: ie
-      real :: Enu,tmp,etanp,etapn,egy,fexp
+      real :: Enu,tmp,etanp,etapn,egy,fe
       real :: t9
       real, dimension(ne) :: em_ec
 
 !.TF.debug.eos-limits reached.
       if (t.le.0.5) then
-         em(:,len)=0.
-         ab(:,len)=0.
-         em(:,lea)=0.
-         ab(:,lea)=0.
-         return
+        em(:,len)=0.
+        ab(:,len)=0.
+        em(:,lea)=0.
+        ab(:,lea)=0.
+        return
       endif
       if ((y(je).gt.0.5).or.(y(je).le.0.05)) then
         em(:,len)=0.
@@ -58,7 +58,7 @@
         return
       endif
 
-!....nuclear ec-rates...................................................
+!.....nuclear ec-rates..................................................
       t9 = t/(units%kb/units%MeV)/1.e9
       if   (((t9.ge.ec_t(1)).and.(t9.le.ec_t(itmax))).and.
      &      ((y(je).ge.ec_ye(1)).and.(y(je).le.ec_ye(iymax))).and.
@@ -72,7 +72,7 @@
 !.....nucleon degeneracy parameter......................................
       if (mu(jhat).gt.0.01) then
         etapn = (y(jn)-y(jp))/(exp(mu(jhat)/t)-1.0)*d/units%mb
-        etanp = (y(jp)-y(jn))/(exp(-mu(jhat).t)-1.0)*d/units%mb
+        etanp = (y(jp)-y(jn))/(exp(-mu(jhat)/t)-1.0)*d/units%mb
       else
         etapn = y(jp)*d/units%mb
         etanp = y(jn)*d/units%mb

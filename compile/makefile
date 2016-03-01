@@ -1,4 +1,8 @@
-LDLIBS= -I/opt/intel/compilers_and_libraries_2016.0.109/linux/mkl/include -L/opt/intel/compilers_and_libraries_2016.0.109/linux/mkl/lib/intel64 \
+LDLIBS= -I/usr/local/intel/composer_xe_2013.5.192/mkl/include \
+        -L/usr/local/intel/composer_xe_2013.5.192/mkl/lib/ia32 \
+        -mkl
+
+#LDLIBS= -I/opt/intel/compilers_and_libraries_2016.0.109/linux/mkl/include -L/opt/intel/compilers_and_libraries_2016.0.109/linux/mkl/lib/intel64 \
         -mkl
 #_lapack -lmkl_em64t -lguide -lpthread -Vaxlib
 
@@ -22,6 +26,8 @@ OBJS =\
   btvdflux.o\
   delept_module.o\
   driver.o\
+  ec_module.o\
+  ec.o\
   egroup_module.o\
   eosinterf.o\
   eos_module.o\
@@ -105,6 +111,16 @@ driver.o:\
   spectrum_module.o\
   state_vector_module.o\
   $(driver)$(@:.o=.f); $(FC) $(CF) $(driver)$(@:.o=.f)
+
+ec_module.o:\
+  egroup_module.o\
+  $(idsa)$(@:.o=.f); $(FC) $(CF) $(idsa)$(@:.o=.f)
+
+ec.o:\
+  egroup_module.o\
+  ec_module.o\
+  $(idsa)$(@:.o=.f); $(FC) $(CF) $(idsa)$(@:.o=.f)
+
 
 egroup_module.o:\
   $(idsa)$(@:.o=.f); $(FC) $(CF) $(idsa)$(@:.o=.f)
@@ -190,6 +206,7 @@ newton_module.o:\
 nprates.o:\
   egroup_module.o\
   species_module.o\
+  ec_module.o\
   units_module.o\
   $(idsa)$(@:.o=.f); $(FC) $(CF) $(idsa)$(@:.o=.f)
 

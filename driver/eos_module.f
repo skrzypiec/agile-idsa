@@ -130,7 +130,7 @@
       write(6,60) ' Info: d-range  =', ls%xmin(1),ls%dx(1)
       write(6,60) ' Info: ye-range =', ls%xmin(2),ls%dx(2)
       write(6,60) ' Info: s-range  =', ls%xmin(3),ls%dx(3)
-      format(a16,2x,3(f13.5))
+60    format(a16,2x,3(f13.5))
 !...
       end subroutine eos_read
 
