@@ -37,7 +37,7 @@
 
 !-----shift a-grid down half a zone-------------------------------------
       do ip=1,np
-        am(ip) = bnm(ip) !*units%Ms                                   ![g]
+        am(ip) = bnm(ip)*units%Ms                                   ![g]
       enddo
 
 !.....average radius....................................................

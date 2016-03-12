@@ -68,10 +68,8 @@
         real :: maximum			!step size limit
         real :: dt			!time interval for state_write
         integer :: dstep		!step interval for state_write
-!...
-        integer :: dtforce		!
-        real :: dtforceval		!
-!...
+        integer :: dtforce
+        real :: dtforceval
       end type input_step_type
 
       type input_idsa_type
@@ -87,6 +85,7 @@
         integer :: parameterised        !switch on or off
         real :: d                       !minimum density for entropy search
         real :: s                       !threshold entropy for off switch
+        integer :: ec                      !nucleon electron capture
       end type input_delept_type
 
       type input_path_type
@@ -96,9 +95,7 @@
         character(72) :: restart        !path to restart files
         character(72) :: eosfn          !file name for eos table
         character(72) :: progenitorfn	!file name for progenitor data
-!...
-        character(72) :: ec		!file name for ec data
-!...
+        character(72) :: ec	        !file name for ec data
       end type input_path_type
 
 !=======================================================================
@@ -298,10 +295,8 @@
         read(1,11) input_step%maximum
         read(1,11) input_step%dt
         read(1,22) input_step%dstep
-!...    
         read(1,22) input_step%dtforce
-        read(1,22) input_step%dtforceval
-!...
+        read(1,11) input_step%dtforceval
         close(1)
 11      format(t25,g12.4)
 22      format(t25,i12)
@@ -342,6 +337,7 @@
         read(1,11) input_delept%parameterised
         read(1,22) input_delept%d
         read(1,22) input_delept%s
+        read(1,11) input_delept%ec
         close(1)
 11      format(t25,i12)
 22      format(t25,g12.4)
@@ -364,9 +360,7 @@
         read(1,11) input_path%restart
         read(1,11) input_path%eosfn
         read(1,11) input_path%progenitorfn
-!...
         read(1,11) input_path%ec
-!...
 11      format(t25,a72)
 22      format(t25,i12)
         close(1)

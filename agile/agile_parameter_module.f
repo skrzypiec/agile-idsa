@@ -9,7 +9,7 @@
 
 C.....basic parameters..................................................
       integer, parameter :: nnp=500    !number of progenitor zones
-      integer, parameter :: nnq=150    !number of supernova zones
+      integer, parameter :: nnq=500    !number of supernova zones
       integer, parameter :: nny=12     !number of unknowns per zone
       integer, parameter :: nng=5      !number of coupled grid points
 

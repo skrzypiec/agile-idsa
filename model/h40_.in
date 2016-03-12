@@ -33,7 +33,7 @@ STATE
 
 Unknowns
 ------------------------|-----------|-----------|-----------|-----------
-nr of progenitor zones           103 (103 for sxxs7b2, ~350 for s15.0)
+nr of progenitor zones           102 (103 for sxxs7b2, ~350 for s15.0)
 nr of supernova zones            103 (~100)
 nr of variables per z.            12
 
@@ -85,12 +85,14 @@ STEP
 parameters
 ------------------------|-----------|-----------|-----------|-----------
 precision                0.10000d+01
-stop time                0.20000d+01
+stop time                0.20000d+02
 first step               0.10000d-04
 minimum step             0.10000d-12
 maximum step             0.10000d-02
 write after time diff    0.10000d-01
 write after step diff             50
+force time step                    0
+force time step value    0.10000d-08
 
 ========================================================================
 IDSA
@@ -120,10 +122,11 @@ PATH
 variable
 ------------------------|-----------|-----------|-----------|-----------
 model                   ./model/
-data                    ./data/
+data                    ./data_h40z002s0_ec/
 restart                 ./restart/
 eos                     ./model/eostable_110727.dat
 filename                h40z002s0
+ec                      ./model/AvgSpectra3-wscr.dat
 
 ========================================================================
 

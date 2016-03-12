@@ -45,7 +45,7 @@
 
 !.....calculate emission and absorption rates for transparent regime....
       call nprates(d,t,y,mu,em,ab)
-      abr = ab / (1. + ab*dt)
+      abr = ab  / (1. + ab*dt)
       abr = em + abr       !em*(1-f)-ab*f = em-(em+ab)*f            !1/s
       ab = em + ab
 

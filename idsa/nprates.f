@@ -13,6 +13,7 @@
       use egroup_module
       use ec_module, only: itmax,iymax,idmax,
      &                     ec_d,ec_t,ec_ye
+      use input_file_module
 
       implicit none
 
@@ -59,12 +60,17 @@
       endif
 
 !.....nuclear ec-rates..................................................
-      t9 = t/(units%kb/units%MeV)/1.e9
-      if   (((t9.ge.ec_t(1)).and.(t9.le.ec_t(itmax))).and.
-     &      ((y(je).ge.ec_ye(1)).and.(y(je).le.ec_ye(iymax))).and.
-     &      ((d.ge.ec_d(1)).and.(d.le.ec_d(idmax))) )then
-        call interpolate_ec(t9,y(je),d,em_ec(1:ne))
-        em(1:ne,len)=em_ec(1:ne)*y(jh)*units%c
+      if (input_delept%initial) call input_read_delept
+      if (input_delept%ec.eq.1) then
+        t9 = t/(units%kb/units%MeV)/1.e9
+        if   (((t9.ge.ec_t(1)).and.(t9.le.ec_t(itmax))).and.
+     &        ((y(je).ge.ec_ye(1)).and.(y(je).le.ec_ye(iymax))).and.
+     &        ((d.ge.ec_d(1)).and.(d.le.ec_d(idmax))) )then
+          call interpolate_ec(t9,y(je),d,em_ec(1:ne))
+          em(1:ne,len)=em_ec(1:ne)*y(jh)*units%c
+        else
+          em(1:ne,len)=0.0
+        endif
       else
         em(1:ne,len)=0.0
       endif

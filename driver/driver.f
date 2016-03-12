@@ -49,9 +49,7 @@
       write(6,*) 'Info: reading '//trim(input_path%eosfn)
       call eos_read(input_path%eosfn)
       call spectrum_initialise
-!...
-      call read_ec  
-!...
+      if (input_delept%ec.eq.1) call read_ec
 
 !-----build initial state-----------------------------------------------
       call agile_initialisation
@@ -61,7 +59,7 @@
       istep = input_action%step !file number to start with
       dthyd = input_step%first  !first time step size
       dtnut = input_step%first  !first time step size
-      count = 0                 !internal counter of time steps
+      count = 0                 !internal count
 
 !-----do time steps-----------------------------------------------------
       if (istep.gt.0) then
@@ -80,10 +78,12 @@
 
 !.....do time step......................................................
           dt = min(dthyd,dtnut,input_step%stop-state%t)
-!...
           if (input_step%initial) call input_read_step
-          if (input_step%dtforce.eq.1) dt=max(dt,input_step%dtforceval)
-!...             
+          if (input_step%dtforce.eq.1) then
+            dt=max(dt,input_step%dtforceval)
+            write(6,*) 'Info: forcing timestep',dt,input_step%dtforceval
+          endif
+
           new = state
           status = 0
           call agile_step(dt,state,new,dthyd,equations_step)

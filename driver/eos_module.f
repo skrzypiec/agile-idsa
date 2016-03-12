@@ -126,12 +126,13 @@
       enddo
       if (count.gt.0) write(6,11) count
 11    format('Warning: ',i9,' holes fixed in EoS table')
-!...
-      write(6,60) ' Info: d-range  =', ls%xmin(1),ls%dx(1)
-      write(6,60) ' Info: ye-range =', ls%xmin(2),ls%dx(2)
-      write(6,60) ' Info: s-range  =', ls%xmin(3),ls%dx(3)
+
+      write(6,60) ' Info: d-range  =',ls%xmin(1),ls%dx(1)
+      write(6,60) ' Info: ye-range =',ls%xmin(2),ls%dx(2)
+      write(6,60) ' Info: s-range  =',ls%xmin(3),ls%dx(3)
 60    format(a16,2x,3(f13.5))
-!...
+
+
       end subroutine eos_read
 
 !=======================================================================
@@ -483,11 +484,11 @@
 !.....find ye index.....................................................
       iy = 1 + floor( (ye - ls%xmin(2))/ls%dx(2) )
       if (iy.lt.1) then
-        status = 2
+!        status = 2
         iy = 1
         ry = 0.
       elseif (iy.ge.nn) then
-        status = 2
+!        status = 2
         iy = nn-1
         ry = 1.
       else

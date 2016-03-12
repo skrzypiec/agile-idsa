@@ -84,16 +84,16 @@
                     endif
                   enddo
                 endif
-                ec(id,iy,it,k) = (1.-re)*ec0(id,iy,it,ie)
+                ec(id,iy,it,k) = (1.-re)*ec0(id,iy,it,ie) 
      &                         +     re *ec0(id,iy,it,ie+1)
               else
                 ec(id,iy,it,k) = 0.
               endif
 
-            enddo
-          enddo
-        enddo
-      enddo
+            enddo            
+          enddo            
+        enddo            
+      enddo            
 
 85    format(' Warning: ec table out of range: re=',f10.4)
 86    format(' (ev,ev_ec)',2(2x,e11.4))
@@ -119,7 +119,7 @@
 
 !.....interpolation routine.............................................
       subroutine interpolate_ec(t9,ye,d,em)
-
+ 
       use egroup_module, only: ne,e
       use ec_module, only: itmax,iymax,idmax,iemax,
      &                     ec_t,ec_d,ec_ye,ec
