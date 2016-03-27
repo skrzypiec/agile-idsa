@@ -66,6 +66,8 @@
         if   (((t9.ge.ec_t(1)).and.(t9.le.ec_t(itmax))).and.
      &        ((y(je).ge.ec_ye(1)).and.(y(je).le.ec_ye(iymax))).and.
      &        ((d.ge.ec_d(1)).and.(d.le.ec_d(idmax))) )then
+!.....in case of problems with interpolation
+!     &        ((d.ge.ec_d(1)).and.(d.le.(1.e11))) )then
           call interpolate_ec(t9,y(je),d,em_ec(1:ne))
           em(1:ne,len)=em_ec(1:ne)*y(jh)*units%c
         else

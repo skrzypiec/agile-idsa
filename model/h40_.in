@@ -4,12 +4,12 @@ ACTION                       Main Control
 
 Action
 ------------------------|-----------|-----------|-----------|-----------
-allocate                           1
-relax                              1
-continue from step nr           0001
+allocate                           0
+relax                              0
+continue from step nr           3160
 message level                      2
 relativistic                       1
-restart                            0
+restart                            1
 
 ========================================================================
 JACOBI
@@ -90,9 +90,9 @@ first step               0.10000d-04
 minimum step             0.10000d-12
 maximum step             0.10000d-02
 write after time diff    0.10000d-01
-write after step diff             50
+write after step diff              2
 force time step                    0
-force time step value    0.10000d-08
+force time step value    0.10000d-06
 
 ========================================================================
 IDSA
@@ -114,6 +114,7 @@ action                          flag
 parameterised delepton.            0
 min. density for search  0.10000d+11
 entropy threshold        0.30000d+01
+ec flag                            0
 
 ========================================================================
 PATH           
@@ -122,7 +123,7 @@ PATH
 variable
 ------------------------|-----------|-----------|-----------|-----------
 model                   ./model/
-data                    ./data_h40z002s0_ec/
+data                    ./data_save/h40z002s0_ec/
 restart                 ./restart/
 eos                     ./model/eostable_110727.dat
 filename                h40z002s0

@@ -6,7 +6,7 @@ Action
 ------------------------|-----------|-----------|-----------|-----------
 allocate                           0
 relax                              0
-continue from step nr           0778 
+continue from step nr           1000 
 message level                      2
 relativistic                       1
 restart                            1
@@ -123,7 +123,7 @@ PATH
 variable
 ------------------------|-----------|-----------|-----------|-----------
 model                   ./model/
-data                    ./data/data_s15s7b2_ec/
+data                    ./data_save/s15s7b2_ec/
 restart                 ./restart/
 eos                     ./model/eostable_110727.dat
 filename                s15s7b2
