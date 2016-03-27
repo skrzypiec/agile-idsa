@@ -27,13 +27,40 @@
       np = input_state%np
 
 !.....read in from file.................................................
+     
       open(unit=10,file=trim(input_path%model)
      &  //trim(input_path%progenitorfn),status='old')
+
+
+!....s15/s40
+!      do ip=1,np+1
+!        read(10,11) i,bnm(ip),anr(ip),bnt(ip),bnd(ip),anu(ip),bny(ip)
+!      enddo
+!11    format(i8,6g12.5)
+
+!....h40
+!      open(unit=10,file=trim(input_path%model)
+!     &  //trim(input_path%progenitorfn),status='old')
+!      do ip=1,np+1
+!        read(10,*) i,bnm(ip),anr(ip),bnt(ip),bnd(ip),anu(ip),bny(ip)
+!      enddo
+!11    format(i8,6g12.5)
+
+!....for u40/u50...............................................................
+      read(10,*)
       do ip=1,np+1
-        read(10,11) i,bnm(ip),anr(ip),bnt(ip),bnd(ip),anu(ip),bny(ip)
+        read(10,*) i,bnm(ip),bnd(ip),bnt(ip),anr(ip),bny(ip),anu(ip)
+        bnd(ip)=10.0**bnd(ip)
+        bnt(ip)=10.0**bnt(ip)
+!        write(6,666) i,bnm(ip),bnd(ip),bnt(ip),anr(ip),bny(ip),anu(ip)
       enddo
-11    format(i8,6g12.5)
+!666   format(i4,10(2x,e12.5))
       close(10)
+
+
+!...s15/s40/u40/u50  with units
+!...h40 without
+
 
 !-----shift a-grid down half a zone-------------------------------------
       do ip=1,np
